@@ -33,10 +33,15 @@ for s in m.get('vendor_from_local', []):
     print(json.dumps(s))
 ")
 
-# Export global CLAUDE.md
-EXPORT_CONFIG="$(dirname "$0")/export-claude-config.sh"
-if [ -f "$EXPORT_CONFIG" ]; then
-    bash "$EXPORT_CONFIG" "$REPO_ROOT"
+# Export global config files
+EXPORT_CLAUDE_CONFIG="$(dirname "$0")/export-claude-config.sh"
+if [ -f "$EXPORT_CLAUDE_CONFIG" ]; then
+    bash "$EXPORT_CLAUDE_CONFIG" "$REPO_ROOT"
+fi
+
+EXPORT_CODEX_CONFIG="$(dirname "$0")/export-codex-config.sh"
+if [ -f "$EXPORT_CODEX_CONFIG" ]; then
+    bash "$EXPORT_CODEX_CONFIG" "$REPO_ROOT"
 fi
 
 echo ""

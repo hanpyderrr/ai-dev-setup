@@ -1,8 +1,10 @@
 # AI Dev Setup
 
-This repo is for cross-machine setup of your Claude/Codex workflow.
+This repo is for cross-machine setup of your Claude and Codex workflows.
 
 It tracks:
+- Claude global configuration
+- Codex global configuration
 - reusable markdown rules and templates
 - setup and verification scripts
 - skill install manifests
@@ -27,10 +29,16 @@ It does not track:
 
 - `bootstrap.ps1`: install and restore entry point
 - `check-env.ps1`: verify required tools and folders
+- `config/claude/CLAUDE.md`: Claude global instruction file
+- `config/codex/AGENTS.md`: Codex global instruction file
 - `config/skills/skills-manifest.json`: source of truth for skills
-- `scripts/export-custom-skills.ps1`: copy local custom skills into this repo
-- `scripts/restore-vendored-skills.ps1`: restore vendored skills on a new machine
-- `skills/vendored/`: pinned custom skills you want to carry across machines
+- `scripts/export-claude-config.ps1`: copy local Claude global config into this repo
+- `scripts/export-codex-config.ps1`: copy local Codex global config into this repo
+- `scripts/export-custom-skills.ps1`: copy local custom skills and global config into this repo
+- `scripts/restore-vendored-skills.ps1`: restore vendored skills and global config on a new machine
+- `skills/vendored/claude/`: pinned Claude skills you want to carry across machines
+- `skills/vendored/codex/`: pinned Codex skills you want to carry across machines
+- `skills/vendored/agents/`: shared agent skills outside one product's config tree
 - `templates/`: reusable markdown templates
 - `docs/`: setup notes and guardrails
 
@@ -40,3 +48,5 @@ It does not track:
 - Curated skills can usually be reinstalled by name.
 - Custom or private skills should be vendored into `skills/vendored/`.
 - Re-login is still required for Claude, Codex, GitHub, Google Drive, and other connectors.
+- Keep Claude-specific controller workflows under `skills/vendored/claude/`.
+- Keep Codex-native guidance and skills under `config/codex/` and `skills/vendored/codex/`.

@@ -34,10 +34,13 @@ if ($InstallBaseTools) {
 }
 
 $codexSkillsDir = Join-Path $env:USERPROFILE ".codex\skills"
+$codexConfigDir = Join-Path $env:USERPROFILE ".codex"
+$claudeSkillsDir = Join-Path $env:USERPROFILE ".claude\skills"
+$claudeConfigDir = Join-Path $env:USERPROFILE ".claude"
 $agentsSkillsDir = Join-Path $env:USERPROFILE ".agents\skills"
 $agentsBinDir = Join-Path $env:USERPROFILE ".agents\bin"
 
-foreach ($dir in @($codexSkillsDir, $agentsSkillsDir, $agentsBinDir)) {
+foreach ($dir in @($claudeConfigDir, $claudeSkillsDir, $codexConfigDir, $codexSkillsDir, $agentsSkillsDir, $agentsBinDir)) {
     if (-not (Test-Path -LiteralPath $dir)) {
         New-Item -ItemType Directory -Path $dir -Force | Out-Null
     }

@@ -62,11 +62,20 @@ for s in m.get('git_clone', []):
     print(__import__('json').dumps(s))
 ")
 
-# Restore global CLAUDE.md
+# Restore global Claude config
 CLAUDE_SRC="$REPO_ROOT/config/claude/CLAUDE.md"
 CLAUDE_DST="$HOME/.claude/CLAUDE.md"
 if [ -f "$CLAUDE_SRC" ]; then
     mkdir -p "$(dirname "$CLAUDE_DST")"
     cp "$CLAUDE_SRC" "$CLAUDE_DST"
     echo "Restored CLAUDE.md -> $CLAUDE_DST"
+fi
+
+# Restore global Codex config
+CODEX_SRC="$REPO_ROOT/config/codex/AGENTS.md"
+CODEX_DST="$HOME/.codex/AGENTS.md"
+if [ -f "$CODEX_SRC" ]; then
+    mkdir -p "$(dirname "$CODEX_DST")"
+    cp "$CODEX_SRC" "$CODEX_DST"
+    echo "Restored AGENTS.md -> $CODEX_DST"
 fi

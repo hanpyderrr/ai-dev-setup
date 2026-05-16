@@ -33,10 +33,15 @@ foreach ($skill in $manifest.vendor_from_local) {
     Write-Host "Exported $($skill.name) -> $target"
 }
 
-# Export global CLAUDE.md
+# Export global config files
 $exportClaudeConfig = Join-Path $PSScriptRoot "export-claude-config.ps1"
 if (Test-Path -LiteralPath $exportClaudeConfig) {
     & $exportClaudeConfig -RepoRoot $RepoRoot
+}
+
+$exportCodexConfig = Join-Path $PSScriptRoot "export-codex-config.ps1"
+if (Test-Path -LiteralPath $exportCodexConfig) {
+    & $exportCodexConfig -RepoRoot $RepoRoot
 }
 
 Write-Host ""

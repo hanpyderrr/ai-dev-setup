@@ -23,3 +23,15 @@ Write-Host ("Skill manifest: {0}" -f $(if (Test-Path -LiteralPath $manifest) { "
 
 $vendoredDir = Join-Path $RepoRoot "skills\vendored"
 Write-Host ("Vendored skills dir: {0}" -f $(if (Test-Path -LiteralPath $vendoredDir) { "OK" } else { "MISSING" }))
+
+$claudeConfigRepo = Join-Path $RepoRoot "config\claude\CLAUDE.md"
+$codexConfigRepo = Join-Path $RepoRoot "config\codex\AGENTS.md"
+$claudeConfigLocal = Join-Path $env:USERPROFILE ".claude\CLAUDE.md"
+$codexConfigLocal = Join-Path $env:USERPROFILE ".codex\AGENTS.md"
+
+Write-Host ""
+Write-Host "Config files:"
+Write-Host ("- repo Claude config: {0}" -f $(if (Test-Path -LiteralPath $claudeConfigRepo) { "OK" } else { "MISSING" }))
+Write-Host ("- repo Codex config: {0}" -f $(if (Test-Path -LiteralPath $codexConfigRepo) { "OK" } else { "MISSING" }))
+Write-Host ("- local Claude config: {0}" -f $(if (Test-Path -LiteralPath $claudeConfigLocal) { "OK" } else { "MISSING" }))
+Write-Host ("- local Codex config: {0}" -f $(if (Test-Path -LiteralPath $codexConfigLocal) { "OK" } else { "MISSING" }))

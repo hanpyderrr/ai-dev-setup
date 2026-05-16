@@ -11,7 +11,7 @@ for arg in "$@"; do
 done
 
 # Create required directories
-for dir in "$HOME/.claude/skills" "$HOME/.agents/skills" "$HOME/.agents/bin"; do
+for dir in "$HOME/.claude" "$HOME/.claude/skills" "$HOME/.codex" "$HOME/.codex/skills" "$HOME/.agents/skills" "$HOME/.agents/bin"; do
     mkdir -p "$dir"
     echo "Ensured: $dir"
 done

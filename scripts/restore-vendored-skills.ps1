@@ -58,7 +58,7 @@ foreach ($skill in $manifest.git_clone) {
     Write-Host "Cloned $($skill.name) -> $target"
 }
 
-# Restore global CLAUDE.md
+# Restore global Claude config
 $claudeConfigSrc = Join-Path $RepoRoot "config\claude\CLAUDE.md"
 if (Test-Path -LiteralPath $claudeConfigSrc) {
     $claudeConfigDst = Join-Path $env:USERPROFILE ".claude\CLAUDE.md"
@@ -68,4 +68,16 @@ if (Test-Path -LiteralPath $claudeConfigSrc) {
     }
     Copy-Item -LiteralPath $claudeConfigSrc -Destination $claudeConfigDst -Force
     Write-Host "Restored CLAUDE.md -> $claudeConfigDst"
+}
+
+# Restore global Codex config
+$codexConfigSrc = Join-Path $RepoRoot "config\codex\AGENTS.md"
+if (Test-Path -LiteralPath $codexConfigSrc) {
+    $codexConfigDst = Join-Path $env:USERPROFILE ".codex\AGENTS.md"
+    $dstParent = Split-Path -Parent $codexConfigDst
+    if (-not (Test-Path -LiteralPath $dstParent)) {
+        New-Item -ItemType Directory -Path $dstParent -Force | Out-Null
+    }
+    Copy-Item -LiteralPath $codexConfigSrc -Destination $codexConfigDst -Force
+    Write-Host "Restored AGENTS.md -> $codexConfigDst"
 }

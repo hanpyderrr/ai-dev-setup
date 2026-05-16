@@ -4,7 +4,8 @@
     "Do not commit bundled skills from C:/Users/hanpyder/.codex/skills/.system",
     "Curated skills can be reinstalled by name or restored from another machine",
     "Custom or private skills should be vendored into this repo",
-    "Skills with their own git remote should be listed under git_clone"
+    "Skills with their own git remote should be listed under git_clone",
+    "Claude skills live under skills/vendored/claude; Codex skills live under skills/vendored/codex"
   ],
   "bundled_with_product": [
     ".codex/skills/.system"
@@ -137,6 +138,111 @@
       "target_repo_path": "skills/vendored/claude/codex-worker",
       "restore_path": "C:/Users/%USERNAME%/.claude/skills/codex-worker",
       "reason": "custom skill: Codex CLI worker collaboration workflow"
+    },
+    {
+      "name": "planning-with-files-zh",
+      "source_path": "C:/Users/hanpyder/.codex/skills/planning-with-files-zh",
+      "target_repo_path": "skills/vendored/codex/planning-with-files-zh",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/planning-with-files-zh",
+      "reason": "Codex-oriented project planning workflow"
+    },
+    {
+      "name": "systematic-debugging",
+      "source_path": "C:/Users/hanpyder/.codex/skills/systematic-debugging",
+      "target_repo_path": "skills/vendored/codex/systematic-debugging",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/systematic-debugging",
+      "reason": "Codex-oriented debugging workflow"
+    },
+    {
+      "name": "test-driven-development",
+      "source_path": "C:/Users/hanpyder/.codex/skills/test-driven-development",
+      "target_repo_path": "skills/vendored/codex/test-driven-development",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/test-driven-development",
+      "reason": "Codex-oriented implementation workflow"
+    },
+    {
+      "name": "verification-before-completion",
+      "source_path": "C:/Users/hanpyder/.codex/skills/verification-before-completion",
+      "target_repo_path": "skills/vendored/codex/verification-before-completion",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/verification-before-completion",
+      "reason": "Codex-oriented completion verification workflow"
+    },
+    {
+      "name": "subagent-driven-development",
+      "source_path": "C:/Users/hanpyder/.codex/skills/subagent-driven-development",
+      "target_repo_path": "skills/vendored/codex/subagent-driven-development",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/subagent-driven-development",
+      "reason": "Codex-oriented multi-agent workflow"
+    },
+    {
+      "name": "executing-plans",
+      "source_path": "C:/Users/hanpyder/.codex/skills/executing-plans",
+      "target_repo_path": "skills/vendored/codex/executing-plans",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/executing-plans",
+      "reason": "Codex-oriented plan execution workflow"
+    },
+    {
+      "name": "using-git-worktrees",
+      "source_path": "C:/Users/hanpyder/.codex/skills/using-git-worktrees",
+      "target_repo_path": "skills/vendored/codex/using-git-worktrees",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/using-git-worktrees",
+      "reason": "Codex-oriented isolated worktree workflow"
+    },
+    {
+      "name": "requesting-code-review",
+      "source_path": "C:/Users/hanpyder/.codex/skills/requesting-code-review",
+      "target_repo_path": "skills/vendored/codex/requesting-code-review",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/requesting-code-review",
+      "reason": "Codex-oriented code review request workflow"
+    },
+    {
+      "name": "receiving-code-review",
+      "source_path": "C:/Users/hanpyder/.codex/skills/receiving-code-review",
+      "target_repo_path": "skills/vendored/codex/receiving-code-review",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/receiving-code-review",
+      "reason": "Codex-oriented code review handling workflow"
+    },
+    {
+      "name": "frontend-design",
+      "source_path": "C:/Users/hanpyder/.codex/skills/frontend-design",
+      "target_repo_path": "skills/vendored/codex/frontend-design",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/frontend-design",
+      "reason": "Codex-oriented frontend design workflow"
+    },
+    {
+      "name": "webapp-testing",
+      "source_path": "C:/Users/hanpyder/.codex/skills/webapp-testing",
+      "target_repo_path": "skills/vendored/codex/webapp-testing",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/webapp-testing",
+      "reason": "Codex-oriented local web app testing workflow"
+    },
+    {
+      "name": "finishing-a-development-branch",
+      "source_path": "C:/Users/hanpyder/.codex/skills/finishing-a-development-branch",
+      "target_repo_path": "skills/vendored/codex/finishing-a-development-branch",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/finishing-a-development-branch",
+      "reason": "Codex-oriented branch completion workflow"
+    },
+    {
+      "name": "pdf",
+      "source_path": "C:/Users/hanpyder/.codex/skills/pdf",
+      "target_repo_path": "skills/vendored/codex/pdf",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/pdf",
+      "reason": "Codex-oriented PDF workflow"
+    },
+    {
+      "name": "docx",
+      "source_path": "C:/Users/hanpyder/.codex/skills/docx",
+      "target_repo_path": "skills/vendored/codex/docx",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/docx",
+      "reason": "Codex-oriented document workflow"
+    },
+    {
+      "name": "sync-ai-config",
+      "source_path": "C:/Users/hanpyder/.codex/skills/sync-ai-config",
+      "target_repo_path": "skills/vendored/codex/sync-ai-config",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/sync-ai-config",
+      "reason": "Codex-oriented config sync workflow"
     }
   ],
   "duplicate_skills_reviewed": [
