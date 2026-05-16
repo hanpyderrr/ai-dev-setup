@@ -3,28 +3,134 @@
   "notes": [
     "Do not commit bundled skills from C:/Users/hanpyder/.codex/skills/.system",
     "Curated skills can be reinstalled by name or restored from another machine",
-    "Custom or private skills should be vendored into this repo"
+    "Custom or private skills should be vendored into this repo",
+    "Skills with their own git remote should be listed under git_clone"
   ],
   "bundled_with_product": [
     ".codex/skills/.system"
   ],
   "reinstall_by_name": [
+    "algorithmic-art",
+    "brainstorming",
+    "canvas-design",
+    "claude-api",
+    "codex-project-init",
+    "dispatching-parallel-agents",
+    "doc-coauthoring",
+    "docx",
     "executing-plans",
+    "find-skills",
     "finishing-a-development-branch",
     "frontend-design",
     "jupyter-notebook",
+    "mcp-builder",
+    "opencli-adapter-author",
+    "opencli-autofix",
+    "opencli-browser",
+    "opencli-usage",
     "pdf",
+    "planning-with-files",
     "planning-with-files-zh",
     "playwright",
+    "pptx",
+    "receiving-code-review",
+    "requesting-code-review",
     "screenshot",
     "security-best-practices",
+    "skill-creator",
+    "smart-search",
+    "subagent-driven-development",
     "systematic-debugging",
     "test-driven-development",
+    "theme-factory",
     "using-git-worktrees",
+    "using-superpowers",
     "verification-before-completion",
     "webapp-testing",
+    "web-artifacts-builder",
     "writing-plans",
-    "codex-project-init"
+    "writing-skills",
+    "xlsx"
+  ],
+  "git_clone": [
+    {
+      "name": "stock-analysis-github",
+      "remote": "https://github.com/mingli30119/stock-analysis.git",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/stock-analysis-github",
+      "note": "has its own upstream git repo; clone directly instead of vendoring"
+    }
+  ],
+  "vendor_from_local": [
+    {
+      "name": "a-stock-data",
+      "source_path": "C:/Users/hanpyder/.agents/skills/a-stock-data",
+      "target_repo_path": "skills/vendored/agents/a-stock-data",
+      "restore_path": "C:/Users/%USERNAME%/.agents/skills/a-stock-data",
+      "reason": "custom skill with its own external origin and private local install state"
+    },
+    {
+      "name": "project-init",
+      "source_path": "C:/Users/hanpyder/.claude/skills/project-init",
+      "target_repo_path": "skills/vendored/claude/project-init",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/project-init",
+      "reason": "custom project bootstrap skill created locally"
+    },
+    {
+      "name": "humanizer-zh",
+      "source_path": "C:/Users/hanpyder/.claude/skills/humanizer-zh",
+      "target_repo_path": "skills/vendored/claude/humanizer-zh",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/humanizer-zh",
+      "reason": "custom Chinese text humanizer skill"
+    },
+    {
+      "name": "karpathy-guidelines",
+      "source_path": "C:/Users/hanpyder/.claude/skills/karpathy-guidelines",
+      "target_repo_path": "skills/vendored/claude/karpathy-guidelines",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/karpathy-guidelines",
+      "reason": "custom behavioral guidelines, no upstream source"
+    },
+    {
+      "name": "ctp-api",
+      "source_path": "C:/Users/hanpyder/.claude/skills/ctp-api",
+      "target_repo_path": "skills/vendored/claude/ctp-api",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/ctp-api",
+      "reason": "custom CTP futures trading API reference skill"
+    },
+    {
+      "name": "nautilus-trader",
+      "source_path": "C:/Users/hanpyder/.claude/skills/nautilus-trader",
+      "target_repo_path": "skills/vendored/claude/nautilus-trader",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/nautilus-trader",
+      "reason": "custom NautilusTrader quant dev guide"
+    },
+    {
+      "name": "rice-quant",
+      "source_path": "C:/Users/hanpyder/.claude/skills/rice-quant",
+      "target_repo_path": "skills/vendored/claude/rice-quant",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/rice-quant",
+      "reason": "custom RiceQuant/RQData API reference skill"
+    },
+    {
+      "name": "tqsdk",
+      "source_path": "C:/Users/hanpyder/.claude/skills/tqsdk",
+      "target_repo_path": "skills/vendored/claude/tqsdk",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/tqsdk",
+      "reason": "custom TianQin SDK quant trading skill"
+    },
+    {
+      "name": "wtpy",
+      "source_path": "C:/Users/hanpyder/.claude/skills/wtpy",
+      "target_repo_path": "skills/vendored/claude/wtpy",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/wtpy",
+      "reason": "custom WonderTrader/wtpy quant trading skill"
+    },
+    {
+      "name": "sync-ai-config",
+      "source_path": "C:/Users/hanpyder/.claude/skills/sync-ai-config",
+      "target_repo_path": "skills/vendored/claude/sync-ai-config",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/sync-ai-config",
+      "reason": "custom skill: sync skills and CLAUDE.md to ai-dev-setup repo"
+    }
   ],
   "duplicate_skills_reviewed": [
     {
@@ -35,15 +141,6 @@
       ],
       "status": "same_header_and_usage",
       "recommendation": "keep one install source; no need to vendor unless locally modified"
-    }
-  ],
-  "vendor_from_local": [
-    {
-      "name": "a-stock-data",
-      "source_path": "C:/Users/hanpyder/.agents/skills/a-stock-data",
-      "target_repo_path": "skills/vendored/agents/a-stock-data",
-      "restore_path": "C:/Users/%USERNAME%/.agents/skills/a-stock-data",
-      "reason": "custom skill with its own external origin and private local install state"
     }
   ]
 }

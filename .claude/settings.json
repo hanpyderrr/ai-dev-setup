@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -Command \"$j=[Console]::In.ReadToEnd()|ConvertFrom-Json;$f=$j.tool_input.file_path;if($f -match 'SKILL\\.md|CLAUDE\\.md|AGENTS\\.md'){Write-Output '[hook] skill/config changed — run /sync-ai-config to push to git'}\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

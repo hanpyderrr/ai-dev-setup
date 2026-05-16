@@ -32,3 +32,13 @@ foreach ($skill in $manifest.vendor_from_local) {
     Copy-Item -LiteralPath $source -Destination $target -Recurse
     Write-Host "Exported $($skill.name) -> $target"
 }
+
+# Export global CLAUDE.md
+$exportClaudeConfig = Join-Path $PSScriptRoot "export-claude-config.ps1"
+if (Test-Path -LiteralPath $exportClaudeConfig) {
+    & $exportClaudeConfig -RepoRoot $RepoRoot
+}
+
+Write-Host ""
+Write-Host "Done. Remember to commit and push:"
+Write-Host "  git add -A && git commit -m 'chore: sync skills and config' && git push"
