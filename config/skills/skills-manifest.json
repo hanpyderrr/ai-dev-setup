@@ -1,0 +1,49 @@
+{
+  "generated_on": "2026-05-16",
+  "notes": [
+    "Do not commit bundled skills from C:/Users/hanpyder/.codex/skills/.system",
+    "Curated skills can be reinstalled by name or restored from another machine",
+    "Custom or private skills should be vendored into this repo"
+  ],
+  "bundled_with_product": [
+    ".codex/skills/.system"
+  ],
+  "reinstall_by_name": [
+    "executing-plans",
+    "finishing-a-development-branch",
+    "frontend-design",
+    "jupyter-notebook",
+    "pdf",
+    "planning-with-files-zh",
+    "playwright",
+    "screenshot",
+    "security-best-practices",
+    "systematic-debugging",
+    "test-driven-development",
+    "using-git-worktrees",
+    "verification-before-completion",
+    "webapp-testing",
+    "writing-plans",
+    "codex-project-init"
+  ],
+  "duplicate_skills_reviewed": [
+    {
+      "name": "codex-project-init",
+      "paths": [
+        "C:/Users/hanpyder/.codex/skills/codex-project-init",
+        "C:/Users/hanpyder/.agents/skills/codex-project-init"
+      ],
+      "status": "same_header_and_usage",
+      "recommendation": "keep one install source; no need to vendor unless locally modified"
+    }
+  ],
+  "vendor_from_local": [
+    {
+      "name": "a-stock-data",
+      "source_path": "C:/Users/hanpyder/.agents/skills/a-stock-data",
+      "target_repo_path": "skills/vendored/agents/a-stock-data",
+      "restore_path": "C:/Users/%USERNAME%/.agents/skills/a-stock-data",
+      "reason": "custom skill with its own external origin and private local install state"
+    }
+  ]
+}
