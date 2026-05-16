@@ -130,6 +130,13 @@
       "target_repo_path": "skills/vendored/claude/sync-ai-config",
       "restore_path": "C:/Users/%USERNAME%/.claude/skills/sync-ai-config",
       "reason": "custom skill: sync skills and CLAUDE.md to ai-dev-setup repo"
+    },
+    {
+      "name": "codex-worker",
+      "source_path": "C:/Users/hanpyder/.claude/skills/codex-worker",
+      "target_repo_path": "skills/vendored/claude/codex-worker",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/codex-worker",
+      "reason": "custom skill: Codex CLI worker collaboration workflow"
     }
   ],
   "duplicate_skills_reviewed": [

@@ -1,118 +1,69 @@
 # 全局开发规范
 
-## 编码工作流：Codex 优先
+## 工作方式
 
-**每次开始写代码前**，先运行 Codex 预检：
+- 先理解项目结构和现有实现，再做修改。
+- 优先使用项目已有的模式、工具和依赖。
+- 改动范围严格限制在当前任务内,不顺手重构或清理周边代码。
+- 不覆盖、回滚或清理用户已有修改，除非用户明确要求。
+- 遇到不确定但可通过代码、测试或文档确认的问题，先自行检查。
+- 信息缺失且继续操作风险较高时，向用户提问。
+- 任务存在多个合理实现方向且代价较大时，即使信息齐全也先确认方向。
+- 涉及架构调整、数据迁移、公开 API 变化、删除文件或高风险多文件改动前，先说明思路和影响范围；普通实现可直接执行并在过程中简要同步。
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-preflight.ps1" -ProjectRoot "$(Get-Location)"
-```
+## 代码修改
 
-- 若返回 `"ok": true`：将实现任务委派给 Codex，Claude 负责审查结果、检查实际改动、做最终判断
-- 若预检失败：Claude 自行实现，不阻塞用户
+- 修改范围保持最小，围绕当前任务完成。
+- 遵循 rule of three：出现三次以上的真实重复才考虑抽象，否则保持内联。
+- 不随意引入新依赖；确需引入时先说明原因。
+- 保持代码风格与当前仓库一致。
+- 注释跟随仓库现有语言和风格；没有明显倾向时，代码注释优先英文，面向用户的说明使用中文。只写必要的解释，不写显而易见的描述。
 
-## Skill / 配置文件同步规则
+## 测试与验证
 
-以下操作完成后，必须调用 `/sync-ai-config` 同步到 ai-dev-setup 仓库：
+- 代码改动后优先运行最相关、成本最低的验证：单测 / typecheck / lint / build。
+- 后端 API、数据模型、核心业务逻辑改动应补充或更新测试；无法补测时说明原因。
+- 前端行为或构建链路改动优先运行 build/typecheck；纯样式小改可用更轻量方式验证。
+- 数据模型变更必须包含迁移或初始化逻辑。
+- 无法运行验证时，明确说明原因和剩余风险。
+- 未验证前不声称"已通过"或"已修复"。
 
-- 新增或修改任何 skill（`~/.claude/skills/` 或 `~/.agents/skills/`）
-- 修改全局 `~/.claude/CLAUDE.md`
+## Git 习惯
+
+- 不执行破坏性命令，如 `git reset --hard`、`git checkout -- .`，除非用户明确要求。
+- 提交前先看 `git status` 和 diff。
+- 不把无关文件加入提交。
+- 提交信息简洁说明实际改动。
+
+## 回复风格
+
+- 默认中文回复。即使引用英文文档、报错信息或源码，解释部分也用中文。
+- 直接、清晰、少废话。
+- 完成任务后简要说明：改了什么、如何验证、有无风险。
+- 出错时直接说明问题和修复方案，不反复道歉或自我检讨。
+- Code review 时优先指出 bug、风险、回归和缺失测试，而不是泛泛评价。
+
+## 安全边界
+
+- 不输出或提交密钥、token、cookie、私钥、`.env` 内容。
+- 不把真实生产数据写入日志、测试或示例。
+- 不主动读取密钥、凭据、缓存、大型构建产物或无关目录；必要时可使用 `git status` / `git diff` / 项目元数据完成任务。
+- 涉及删除、迁移、线上数据、权限或计费逻辑时格外保守。
+
+## 工具偏好
+
+- 搜索文件优先用 `rg`。
+- 通过文件树、入口文件、相关测试定位上下文，避免大范围读取无关代码。
+- 能用项目脚本完成的事，优先使用项目脚本。
+
+## Skill / 配置同步
+
+以下操作完成后，运行同步命令（定义见 `~/.agents/bin/sync-ai-config.ps1` 或等效脚本）：
+
+- 新增或修改 `~/.claude/skills/` 或 `~/.agents/skills/` 下的 skill
+- 修改本文件
 - 修改项目内 `AGENTS.md`
 
----
+## 多 Agent 协作（按需启用）
 
-## 角色纪律
-
-- 改动范围严格限制在当前请求步骤内，不做超出请求的重构或抽象
-- 每次改动只解决当前问题，不顺手清理周边代码
-- 功能未经人工验证前不视为完成
-
-## 质量门槛
-
-- 后端 API 改动必须有对应测试，且测试通过
-- 前端改动必须通过构建检查（`npm run build` 或等效命令）
-- 数据模型变更必须包含迁移或初始化逻辑
-- 不提交任何密钥、secret 或含真实凭据的配置文件
-
----
-
-## 多 Agent 协作规范
-
-**仅当用户明确要求引入第二个 AI agent（如 Codex）做审查时，才启用以下规范并创建对应文件。单独使用 Claude 时不创建这些文件。**
-
-### 启用时需创建的文件
-
-- `AI_HANDOFF.md` — Claude Code 每次改完代码后的交接记录
-- `AI_REVIEW.md` — 审查 agent 的发现和验证结果
-- `AGENTS.md` — 审查 agent 的工作指南
-
-### 交接记录格式（AI_HANDOFF.md）
-
-每次修改文件后，在回复前必须追加一条记录：
-
-```markdown
-## YYYY-MM-DD HH:mm - Claude 交接
-
-### 摘要
-- ...
-
-### 修改文件
-- `path/to/file`
-
-### 验证方式
-- `命令`
-
-### 已知问题
-- ...
-```
-
-### Review 处理流程
-
-收到审查 agent 的 Review 后：
-
-1. 读 `AI_REVIEW.md`
-2. 按严重程度顺序修复 OPEN 问题
-3. 将已修复项在 `AI_REVIEW.md` 中标记为 `[x] FIXED`
-4. 在 `AI_HANDOFF.md` 中记录本次修复内容
-5. 未解决的问题明确留存，不要隐藏
-
-<!-- CODEX_WORKER_RULES_START -->
-
-## Codex CLI Worker 协作规则
-
-当任务属于大工程、跨模块修改、批量重构、独立审查，或用户明确要求 Claude 与 Codex 配合时，Claude 先尝试使用本机 Codex CLI 作为 worker。
-
-### 调用前检查
-
-先运行：
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-preflight.ps1" -ProjectRoot "$(Get-Location)"
-```
-
-仅当返回 `"ok": true` 时才委派任务。若失败，Claude 自行继续，不要阻塞用户。
-
-### 委派实现
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-delegate.ps1" -ProjectRoot "$(Get-Location)" -Prompt "具体任务"
-```
-
-Codex 的结果写入 `AI_CODEX_RESULT.md`。Claude 必须读取结果、检查实际改动，并继续负责最终判断。
-
-### 委派审查
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-review.ps1" -ProjectRoot "$(Get-Location)"
-```
-
-审查结果写入 `AI_REVIEW.md`。Claude 按严重程度处理发现，不盲目采纳。
-
-### 边界
-
-- Claude 是主控，Codex 是 worker。
-- 不让 Codex 再调用 Claude，避免递归协作。
-- 不读取 `auth.json`、credentials、token、secret 等文件。
-- 失败时回退到 Claude 自己执行。
-
-<!-- CODEX_WORKER_RULES_END -->
+涉及与 Codex CLI 协作时，加载 `~/.claude/skills/codex-worker/SKILL.md`，按其规则执行。其余情况不创建 `AI_HANDOFF.md` / `AI_REVIEW.md` / `AGENTS.md`。
