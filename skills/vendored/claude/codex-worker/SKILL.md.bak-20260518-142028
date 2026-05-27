@@ -1,4 +1,4 @@
-﻿---
+---
 name: codex-worker
 description: 当任务需要与本机 Codex CLI 协作（委派实现、独立审查、跨模块重构、批量改动）时使用。Claude 作为主控，Codex 作为 worker。仅在 Windows + PowerShell 环境可用。
 ---
@@ -28,10 +28,6 @@ description: 当任务需要与本机 Codex CLI 协作（委派实现、独立�
 - 不让 Codex 调用 Claude，避免递归。
 - 失败时回退到 Claude 自行执行，不阻塞用户。
 
-
-## 工作记忆恢复
-
-在项目存在 `docs/agent-work/` 时，Claude 委派前必须先阅读 `docs/agent-work/progress.md`、`docs/agent-work/AI_HANDOFF.md`、`docs/agent-work/AI_REVIEW.md`，并把这些上下文写入委派任务。完整任务节点结束后，更新 `docs/agent-work/AI_HANDOFF.md` 和 `docs/agent-work/progress.md`，尤其写清“下一个 agent 接手建议”。不要在项目根目录新建 `AI_*.md`。
 ## 流程
 
 ### 1. 预检
@@ -44,32 +40,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bi
 
 ### 2. 委派实现
 
-**必须用 `-PromptFile` 传递任务描述，禁止直接用 `-Prompt` 传多行字符串。**
-
-先将任务描述写入文件：
+先将任务描述写入文件（避免引号、换行、特殊字符引发的参数解析问题）：
 
 ```powershell
-Set-Content -Path ".\docs\agent-work\AI_CODEX_PROMPT.md" -Value "<具体任务描述>" -Encoding UTF8
+Set-Content -Path ".\AI_CODEX_PROMPT.md" -Value "<具体任务描述>" -Encoding UTF8
 ```
 
 再调用脚本：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-delegate.ps1" -ProjectRoot "$(Get-Location)" -PromptFile ".\docs\agent-work\AI_CODEX_PROMPT.md"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-delegate.ps1" -ProjectRoot "$(Get-Location)" -PromptFile ".\AI_CODEX_PROMPT.md"
 ```
 
-#### 为什么必须用文件而不是直接传字符串
+结果写入 `AI_CODEX_RESULT.md`。Claude 必须：
 
-`codex-invoke.ps1` 原先把 prompt 放进 `ProcessStartInfo.Arguments`（Windows 命令行字符串），存在两个系统级缺陷：
-
-1. **GBK 字节污染**：中文字符在 GBK（系统代码页 936）编码下，部分字节值恰好等于 `0x22`（双引号），会提前关闭引号边界，使后续内容被解析为独立参数（错误表现：`unexpected argument 'xxx' found`）。
-2. **换行符切割**：PowerShell `-File` 模式解析参数时，引号内的换行符会拆分参数，多行 prompt 变成若干位置参数（错误表现：`Illegal characters in path`）。
-
-**已修复**：`codex-invoke.ps1` 现在对 `.ps1` wrapper 使用 `-EncodedCommand`（UTF-16LE base64），命令行只含纯 ASCII，彻底绕开 GBK 转码和换行切割。`-PromptFile` 仍是推荐路径，因为它保持 prompt 与代码分离，便于复查。
-
-结果写入 `docs/agent-work/AI_CODEX_RESULT.md`。Claude 必须：
-
-1. 读取 `docs/agent-work/AI_CODEX_RESULT.md` 全文。
+1. 读取 `AI_CODEX_RESULT.md` 全文。
 2. **扫描是否含 secret / token / credential / 私钥痕迹**，发现后立即指出并拒绝采纳该部分。
 3. 检查实际改动（`git diff`），与结果描述对照。
 4. 对每条改动独立判断是否采纳，不盲信。
@@ -80,17 +65,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bi
 powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bin\codex-review.ps1" -ProjectRoot "$(Get-Location)"
 ```
 
-结果写入 `docs/agent-work/AI_REVIEW.md`。Claude 处理每条发现时必须独立验证（读对应代码或跑测试），并标注：
+结果写入 `AI_REVIEW.md`。Claude 处理每条发现时必须独立验证（读对应代码或跑测试），并标注：
 
 - `ACCEPTED` — 已确认并将修复
 - `REJECTED` — 已确认无问题或不适用，说明理由
 - `NEEDS-INFO` — 需要更多上下文，挂起
 
-按严重程度顺序处理 `ACCEPTED` 项，修复后在 `docs/agent-work/AI_REVIEW.md` 标记 `[x] FIXED`。
+按严重程度顺序处理 `ACCEPTED` 项，修复后在 `AI_REVIEW.md` 标记 `[x] FIXED`。
 
 ### 4. 交接记录
 
-仅当本次工作构成一个**完整任务节点**（用户视角的一次交付）时，在 `docs/agent-work/AI_HANDOFF.md` 追加：
+仅当本次工作构成一个**完整任务节点**（用户视角的一次交付）时，在 `AI_HANDOFF.md` 追加：
 
 ```markdown
 ## YYYY-MM-DD HH:mm - Claude 交接
@@ -120,12 +105,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\.agents\bi
 
 启用本 skill 时可能产生的文件：
 
-- `docs/agent-work/AI_CODEX_PROMPT.md` — Claude 写给 Codex 的任务描述
-- `docs/agent-work/AI_CODEX_RESULT.md` — Codex 实现结果
-- `docs/agent-work/AI_REVIEW.md` — Codex 审查结果及处理状态
-- `docs/agent-work/AI_HANDOFF.md` — 完整任务节点的交接记录
+- `AI_CODEX_RESULT.md` — Codex 实现结果
+- `AI_REVIEW.md` — Codex 审查结果及处理状态
+- `AI_HANDOFF.md` — 完整任务节点的交接记录
 - `AGENTS.md` — 给 Codex 看的项目工作指南（项目级别，按需创建）
 
 未启用本 skill 时不创建上述任何文件。
-
-

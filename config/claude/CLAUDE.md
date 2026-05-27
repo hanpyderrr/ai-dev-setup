@@ -1,4 +1,4 @@
-# 全局开发规范
+﻿# 全局开发规范
 
 ## 工作方式
 
@@ -56,6 +56,12 @@
 - 通过文件树、入口文件、相关测试定位上下文，避免大范围读取无关代码。
 - 能用项目脚本完成的事，优先使用项目脚本。
 
+
+## 项目协作记忆
+
+- 如果项目内存在 `docs/agent-work/`，每次开始任务、恢复会话或从 Codex/其他 agent 接手前，先阅读其中的 `progress.md`、`AI_HANDOFF.md`、`AI_REVIEW.md`；处理 Codex worker 输出时再读 `AI_CODEX_RESULT.md`。
+- 如果项目说明规定协作文件位于 `docs/agent-work/`，不要在根目录新建 `AI_*.md`。
+- 完成一次用户可感知的任务节点后，按项目规则更新 handoff/progress，帮助 Claude/Codex 之间保留工作记忆。
 ## Skill / 配置同步
 
 以下操作完成后，运行同步命令（定义见 `~/.agents/bin/sync-ai-config.ps1` 或等效脚本）：

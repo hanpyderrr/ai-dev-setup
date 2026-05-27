@@ -1,4 +1,4 @@
-# Codex 全局 Agent 指南
+﻿# Codex 全局 Agent 指南
 
 这是由 `ai-dev-setup` 跟踪的 Codex 全局配置。
 
@@ -66,6 +66,12 @@
 - 除非任务明确需要且已有必要批准，不要安装依赖、拉取远程资源或改变全局工具配置。
 - 如果命令需要 elevated 或 unsandboxed 权限，通过相应审批机制申请，并说明原因。
 
+
+## 项目协作记忆
+
+- 如果项目内存在 `docs/agent-work/`，每次开始任务或恢复会话前先阅读其中的 `progress.md`、`AI_HANDOFF.md`、`AI_REVIEW.md`；处理 worker 输出时再读 `AI_CODEX_RESULT.md`。
+- 如果项目说明规定协作文件位于 `docs/agent-work/`，不要在根目录新建 `AI_*.md`。
+- 完成一次用户可感知的任务节点后，按项目规则更新 handoff/progress，帮助 Claude/Codex 之间保留工作记忆。
 ## Skill 使用说明
 
 - 多步骤任务使用 planning 类 skill。
@@ -76,3 +82,4 @@
 - 除非用户要求或项目已经使用，不要创建 `AI_HANDOFF.md`、`AI_REVIEW.md`、`AI_CODEX_RESULT.md` 等协作文件。
 - 修改全局 agent 配置、skill 或项目 `AGENTS.md` 后，如有配置好的同步脚本就运行，否则提醒用户同步。
 - 不要在 Codex 全局指南中加入 Claude 调用 Codex 的委派规则。
+
