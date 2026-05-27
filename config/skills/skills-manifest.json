@@ -140,6 +140,13 @@
       "reason": "custom skill: Codex CLI worker collaboration workflow"
     },
     {
+      "name": "task-done-notify",
+      "source_path": "C:/Users/hanpyder/.claude/skills/task-done-notify",
+      "target_repo_path": "skills/vendored/claude/task-done-notify",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/task-done-notify",
+      "reason": "custom skill: Windows task completion notification via PushNotification + Stop hook"
+    },
+    {
       "name": "planning-with-files-zh",
       "source_path": "C:/Users/hanpyder/.codex/skills/planning-with-files-zh",
       "target_repo_path": "skills/vendored/codex/planning-with-files-zh",
