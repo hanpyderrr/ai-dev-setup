@@ -1,4 +1,4 @@
-﻿# 全局开发规范
+# 全局开发规范
 
 ## 工作方式
 
@@ -72,4 +72,6 @@
 
 ## 多 Agent 协作（按需启用）
 
-涉及与 Codex CLI 协作时，加载 `~/.claude/skills/codex-worker/SKILL.md`，按其规则执行。其余情况不创建 `AI_HANDOFF.md` / `AI_REVIEW.md` / `AGENTS.md`。
+- 用户明确要求初始化多 agent 协作工作区、Claude Code + Codex 共同开发、任务锁、文件归属、handoff 或 changelog 互通时，加载 `~/.claude/skills/multi-agent-workspace-init/SKILL.md`，按其规则创建或修复项目协作中心。
+- 涉及与 Codex CLI 协作执行具体开发任务时，加载 `~/.claude/skills/codex-worker/SKILL.md`，按其规则执行。
+- 不要在普通单 agent 快速任务中默认创建 `AI_HANDOFF.md` / `AI_REVIEW.md` / `AGENTS.md`；只有用户明确要求协作初始化，或项目已有规则要求时才创建或更新。

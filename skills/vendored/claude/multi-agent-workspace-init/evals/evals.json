@@ -1,0 +1,23 @@
+﻿{
+  "skill_name": "multi-agent-workspace-init",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "把这个现有 PPT 工程配置成 Claude Code 和 Codex 可以共同协作的工作区，要求能知道谁在改什么、刚刚改了什么，并避免同时改同一个 pptx。",
+      "expected_output": "Creates or proposes a collaboration center with README, current state, task board, changelog, decisions, file ownership, task templates, locks, and updates project agent instructions without overwriting meaningful files.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "这个 repo 以前有 docs/agent-work，但现在团队都在用 文档/工作记录。帮我修复 agent 启动说明，不要删除历史文件。",
+      "expected_output": "Selects 文档/工作记录 as the active collaboration root, marks docs/agent-work as historical, updates startup read order, and preserves existing records.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "两个 agent 总是同时改同一个生成脚本和同一个最终 deck，给我初始化一个锁文件和任务看板机制。",
+      "expected_output": "Defines non-parallel file ownership for generated decks/scripts, creates task board and lock file templates with expiry/stale handling, and describes start/finish workflows.",
+      "files": []
+    }
+  ]
+}

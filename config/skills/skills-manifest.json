@@ -140,6 +140,13 @@
       "reason": "custom skill: Codex CLI worker collaboration workflow"
     },
     {
+      "name": "multi-agent-workspace-init",
+      "source_path": "C:/Users/hanpyder/.claude/skills/multi-agent-workspace-init",
+      "target_repo_path": "skills/vendored/claude/multi-agent-workspace-init",
+      "restore_path": "C:/Users/%USERNAME%/.claude/skills/multi-agent-workspace-init",
+      "reason": "custom skill: multi-agent workspace initialization workflow"
+    },
+    {
       "name": "task-done-notify",
       "source_path": "C:/Users/hanpyder/.claude/skills/task-done-notify",
       "target_repo_path": "skills/vendored/claude/task-done-notify",
