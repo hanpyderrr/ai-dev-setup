@@ -250,6 +250,13 @@
       "target_repo_path": "skills/vendored/codex/sync-ai-config",
       "restore_path": "C:/Users/%USERNAME%/.codex/skills/sync-ai-config",
       "reason": "Codex-oriented config sync workflow"
+    },
+    {
+      "name": "multi-agent-workspace-init",
+      "source_path": "C:/Users/hanpyder/.codex/skills/multi-agent-workspace-init",
+      "target_repo_path": "skills/vendored/codex/multi-agent-workspace-init",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/multi-agent-workspace-init",
+      "reason": "Codex-oriented multi-agent workspace initialization workflow"
     }
   ],
   "duplicate_skills_reviewed": [
