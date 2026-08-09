@@ -1,17 +1,21 @@
 ---
 name: task-done-notify
-description: 任务完成后主动通知用户（Windows 桌面弹窗 + PushNotification）。用户经常切换窗口，需要知道 Claude 什么时候完成了任务。
+description: 任务完成后或等待用户确认时主动通知用户（Windows 桌面弹窗 + PushNotification）。用户经常切换窗口，需要知道 Claude 什么时候完成了任务，以及什么时候在等他确认。
 ---
 
-# 任务完成通知
+# 完成 / 等待确认通知
 
 ## 目的
 
-用户在等待 Claude 处理任务时会切换到其他窗口。这个 skill 定义了何时、以何种方式主动通知用户任务已完成。
+用户在等待 Claude 处理任务时会切换到其他窗口。这个 skill 定义了何时、以何种方式主动通知用户：
+1. 任务已完成
+2. Claude 遇到问题需要用户确认后才能继续推进
 
-## 两层通知机制
+## 两类通知
 
-### Layer 1：Claude 主动调用 PushNotification（任务级）
+### 场景 A：任务完成通知
+
+#### Layer 1：Claude 主动调用 PushNotification（任务级）
 
 当完成一个用户可感知的任务节点时，立即调用内置的 `PushNotification` 工具，附上任务结果摘要。
 
@@ -38,7 +42,7 @@ description: 任务完成后主动通知用户（Windows 桌面弹窗 + PushNoti
 - "Codex 实现完成，已审查 3 个文件，无安全问题，可提交"
 - "build 通过，API 类型错误已修复"
 
-### Layer 2：Stop Hook 自动触发（会话级）
+#### Layer 2：Stop Hook 自动触发（会话级）
 
 `~/.claude/settings.json` 已配置 Stop hook，每次 Claude 停止响应时自动弹出 Windows 系统托盘通知（"Claude 完成了任务"）。
 
@@ -47,12 +51,37 @@ description: 任务完成后主动通知用户（Windows 桌面弹窗 + PushNoti
 C:\Users\hanpyder\.claude\scripts\notify-done.ps1
 ```
 
+### 场景 B：等待确认通知
+
+当 Claude 遇到以下情况、必须停下来等用户确认才能继续推进时，**主动**调用等待确认脚本（Windows 托盘通知），让切走窗口的用户知道该回来做决定了。
+
+**何时调用：**
+- 需要用户决策才能继续（AskUserQuestion 提问、方案选择）
+- 阻塞性问题：信息缺失、权限、冲突、破坏性操作确认
+- 计划需要批准、任务推进方向拿不准必须问用户
+
+**如何调用（PowerShell）：**
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File "C:\Users\hanpyder\.claude\scripts\notify-waiting.ps1" -Message "需要你确认：<一句话说明卡点>"
+```
+
+脚本位于：
+```
+C:\Users\hanpyder\.claude\scripts\notify-waiting.ps1
+```
+默认文案"需要你的确认"，图标为警告（Warning），与"任务完成"的信息（Info）图标区分。
+
+**何时不调用：**
+- 已有其他通知手段覆盖（如刚弹过 PushNotification）
+- 问题不阻塞、用户可随时回复（避免频繁打扰）
+
 ## 依赖
 
 - `PushNotification`：Claude Code 内置工具，直接调用
 - `notify-done.ps1`：Windows 系统托盘气泡通知，由 Stop hook 自动调用
+- `notify-waiting.ps1`：Windows 系统托盘警告通知，Claude 等待确认时主动调用
 - Stop hook 已在 `~/.claude/settings.json` 配置，无需额外设置
 
 ## 平台说明
 
-Stop hook 仅在 Windows 有效（依赖 `System.Windows.Forms`）。`PushNotification` 工具跨平台可用。
+托盘脚本仅在 Windows 有效（依赖 `System.Windows.Forms`）。`PushNotification` 工具跨平台可用。

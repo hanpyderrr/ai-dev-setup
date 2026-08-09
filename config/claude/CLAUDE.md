@@ -75,3 +75,13 @@
 - 用户明确要求初始化多 agent 协作工作区、Claude Code + Codex 共同开发、任务锁、文件归属、handoff 或 changelog 互通时，加载 `~/.claude/skills/multi-agent-workspace-init/SKILL.md`，按其规则创建或修复项目协作中心。
 - 涉及与 Codex CLI 协作执行具体开发任务时，加载 `~/.claude/skills/codex-worker/SKILL.md`，按其规则执行。
 - 不要在普通单 agent 快速任务中默认创建 `AI_HANDOFF.md` / `AI_REVIEW.md` / `AGENTS.md`；只有用户明确要求协作初始化，或项目已有规则要求时才创建或更新。
+
+## Codex 审查（可调用即默认启用）
+
+- 凡涉及代码编辑或实现计划，只要本机 Codex worker 可调用（`~/.agents/bin/codex-preflight.ps1` 通过），默认用 Codex 审查，无需用户每次点名：
+  - 写完实现计划 → 先让 Codex 评审计划，按意见修订后再动手；
+  - 完成一段代码改动 → 让 Codex review diff，处理意见后再收尾 / 提交。
+- 用 `~/.agents/bin/` 下的 `codex-delegate` / `codex-review` / `codex-audit`；Codex 只读评审，不改文件，结果落 `docs/agent-work/AI_REVIEW.md` / `AI_CODEX_RESULT.md`。
+- Claude 始终是控制方：对 Codex 意见先核实再取舍，不盲从也不盲拒，分歧以证据（实跑/读码）判断，并向用户说明采纳与暂缓的理由。
+- Codex 不可用（preflight 失败或无该环境）时照常自行完成，并明确说明本次未经 Codex 审查。
+- 仅注释 / 格式 / 一两行低风险改动可跳过，避免无谓往返。
