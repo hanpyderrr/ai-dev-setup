@@ -1,0 +1,4 @@
+interface:
+  display_name: "三 Agent 协作"
+  short_description: "Codex 主控、Claude 审核、DeepSeek 实现的大项目协作流程"
+  default_prompt: "使用三 Agent 协作流程规划、实现、验证并审核这个大型项目。"

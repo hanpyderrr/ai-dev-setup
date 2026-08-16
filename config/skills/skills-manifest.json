@@ -161,6 +161,13 @@
       "reason": "Codex-oriented project planning workflow"
     },
     {
+      "name": "three-agent-collaboration",
+      "source_path": "C:/Users/hanpyder/.codex/skills/three-agent-collaboration",
+      "target_repo_path": "skills/vendored/codex/three-agent-collaboration",
+      "restore_path": "C:/Users/%USERNAME%/.codex/skills/three-agent-collaboration",
+      "reason": "Cost-aware Codex, Claude Code, and DeepSeek Harness collaboration workflow"
+    },
+    {
       "name": "systematic-debugging",
       "source_path": "C:/Users/hanpyder/.codex/skills/systematic-debugging",
       "target_repo_path": "skills/vendored/codex/systematic-debugging",
