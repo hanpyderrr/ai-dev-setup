@@ -59,7 +59,7 @@
 
 ## 项目协作记忆
 
-- 如果项目内存在 `docs/agent-work/`，每次开始任务、恢复会话或从 Codex/其他 agent 接手前，先阅读其中的 `progress.md`、`AI_HANDOFF.md`、`AI_REVIEW.md`；处理 Codex worker 输出时再读 `AI_CODEX_RESULT.md`。
+- 如果项目内存在 `docs/agent-work/`，每次开始任务、恢复会话或从其他 agent 接手前，先阅读其中的 `progress.md`、`AI_HANDOFF.md`、`AI_REVIEW.md`；处理 DeepSeek Harness worker 输出时再读 `AI_CODEX_RESULT.md`（文件名沿用，内容为 worker 审查结果）。
 - 如果项目说明规定协作文件位于 `docs/agent-work/`，不要在根目录新建 `AI_*.md`。
 - 完成一次用户可感知的任务节点后，按项目规则更新 handoff/progress，帮助 Claude/Codex 之间保留工作记忆。
 ## Skill / 配置同步
@@ -72,16 +72,16 @@
 
 ## 多 Agent 协作（按需启用）
 
-- 用户明确要求初始化多 agent 协作工作区、Claude Code + Codex 共同开发、任务锁、文件归属、handoff 或 changelog 互通时，加载 `~/.claude/skills/multi-agent-workspace-init/SKILL.md`，按其规则创建或修复项目协作中心。
-- 涉及与 Codex CLI 协作执行具体开发任务时，加载 `~/.claude/skills/codex-worker/SKILL.md`，按其规则执行。
+- 用户明确要求初始化多 agent 协作工作区、Claude Code + DeepSeek Harness 共同开发、任务锁、文件归属、handoff 或 changelog 互通时，加载 `~/.claude/skills/multi-agent-workspace-init/SKILL.md`，按其规则创建或修复项目协作中心。
+- 分工基准：Claude Code 主控（范围、架构、验收、审查），DeepSeek Harness 执行（实现、RED/GREEN、验证、证据记录）；项目内如有 `docs/agent-work/CC_COLLABORATION_FRAMEWORK.md` 以该文件为准。
 - 不要在普通单 agent 快速任务中默认创建 `AI_HANDOFF.md` / `AI_REVIEW.md` / `AGENTS.md`；只有用户明确要求协作初始化，或项目已有规则要求时才创建或更新。
 
-## Codex 审查（可调用即默认启用）
+## 独立审查（两 Agent 协作默认启用）
 
-- 凡涉及代码编辑或实现计划，只要本机 Codex worker 可调用（`~/.agents/bin/codex-preflight.ps1` 通过），默认用 Codex 审查，无需用户每次点名：
-  - 写完实现计划 → 先让 Codex 评审计划，按意见修订后再动手；
-  - 完成一段代码改动 → 让 Codex review diff，处理意见后再收尾 / 提交。
-- 用 `~/.agents/bin/` 下的 `codex-delegate` / `codex-review` / `codex-audit`；Codex 只读评审，不改文件，结果落 `docs/agent-work/AI_REVIEW.md` / `AI_CODEX_RESULT.md`。
-- Claude 始终是控制方：对 Codex 意见先核实再取舍，不盲从也不盲拒，分歧以证据（实跑/读码）判断，并向用户说明采纳与暂缓的理由。
-- Codex 不可用（preflight 失败或无该环境）时照常自行完成，并明确说明本次未经 Codex 审查。
+- 协作体系为两个 agent：Claude Code（主控）与 DeepSeek Harness（执行），无 Codex。
+- 凡涉及代码编辑或实现计划，默认由未实现的一方做独立只读审查，无需用户每次点名：
+  - DeepSeek Harness 实现 → Claude 审查 diff、跑验收集并做最终验收；
+  - Claude 自己实现 → DeepSeek Harness 只读审查（可调用时）；不可用时明确说明"本次未经独立审查"，由用户兜底验收。
+- 审查结果落项目 `docs/agent-work/AI_REVIEW.md`（或审查方产出的结果文件）。
+- Claude 始终是控制方：对审查意见先核实再取舍，不盲从也不盲拒，分歧以证据（实跑/读码）判断，并向用户说明采纳与暂缓的理由。
 - 仅注释 / 格式 / 一两行低风险改动可跳过，避免无谓往返。
